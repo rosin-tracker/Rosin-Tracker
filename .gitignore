@@ -1,0 +1,15 @@
+/vendor/
+/var/
+
+/.env
+/.env.*
+/composer.phar
+/.phpunit.cache/
+
+/.idea/
+/.vscode/
+/.DS_Store
+/Thumbs.db
+
+*.log
+*.tar.gz

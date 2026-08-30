@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ROSIN_TRACKER_DATA_DIR: /tmp/rosin-tracker-data
+      ROSIN_TRACKER_EXTERNAL_URL: https://rosin-tracker.test
+      ROSIN_TRACKER_TIMEZONE: UTC
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: curl, fileinfo, gd, iconv, intl, json, mbstring, openssl, pdo, pdo_sqlite, session, sodium, sqlite3, zip
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate Composer metadata
+        run: composer validate --strict
+
+      - name: Audit locked production dependencies
+        run: composer audit --locked --no-dev
+
+      - name: Install locked production dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress --classmap-authoritative
+
+      - name: Lint PHP
+        shell: bash
+        run: find src templates bin migrations public -type f -name '*.php' -print0 | sort -z | xargs -0 -n1 php -l
+
+      - name: Run application checks
+        shell: bash
+        run: |
+          mkdir -p "$ROSIN_TRACKER_DATA_DIR"
+          php bin/check-runtime.php
+          php bin/check-database-baseline.php
+          php bin/check-external-url.php
+          php bin/check-application-url-setting.php
+          php bin/check-analytics.php
+          php bin/check-normalized-press-storage.php
+          php bin/smoke-test.php

@@ -1,0 +1,38 @@
+{
+    "name": "rosin-tracker/rosin-tracker",
+    "description": "A private, self-hosted rosin batch tracker.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "ext-curl": "*",
+        "ext-fileinfo": "*",
+        "ext-gd": "*",
+        "ext-iconv": "*",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-pdo": "*",
+        "ext-pdo_sqlite": "*",
+        "ext-session": "*",
+        "ext-sodium": "*",
+        "ext-sqlite3": "*",
+        "ext-zip": "*",
+        "bacon/bacon-qr-code": "^3.1",
+        "digitalcz/openid-connect": "^1.4",
+        "spomky-labs/otphp": "^11.5",
+        "symfony/http-client": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "RosinTracker\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": false,
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}

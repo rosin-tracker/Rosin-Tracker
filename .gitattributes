@@ -1,0 +1,21 @@
+* text=auto eol=lf
+
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.php text eol=lf
+*.sql text eol=lf
+*.svg text eol=lf
+*.yml text eol=lf
+
+*.gif binary
+*.jpeg binary
+*.jpg binary
+*.png binary
+*.webp binary
+
+/var export-ignore
+/.env export-ignore
+/.env.* export-ignore
+/.github export-ignore
